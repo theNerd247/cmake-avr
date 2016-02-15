@@ -32,6 +32,7 @@
 # options
 ##########################################################################
 option(WITH_MCU "Add the mCU type to the target file name." ON)
+set(AVR_ENABLED "" INTERNAL)
 
 ##########################################################################
 # executables in use
@@ -209,7 +210,7 @@ function(add_avr_executable EXECUTABLE_NAME)
       upload_${EXECUTABLE_NAME}
       ${AVR_UPLOADTOOL} -p ${AVR_MCU} -c ${AVR_PROGRAMMER} ${AVR_UPLOADTOOL_OPTIONS}
          -U flash:w:${hex_file}
-         -P ${AVR_UPLOADTOOL_PORT}
+				 -P ${AVR_UPLOADTOOL_PORT}
       DEPENDS ${hex_file}
       COMMENT "Uploading ${hex_file} to ${AVR_MCU} using ${AVR_PROGRAMMER}"
    )
@@ -326,7 +327,7 @@ endfunction(add_avr_library)
 ##########################################################################
 function(avr_target_link_libraries EXECUTABLE_TARGET)
    if(NOT ARGN)
-      message(FATAL_ERROR "Nothing to link to ${EXECUTABLE_TARGET}.")
+     message(WARNING "Nothing to link to ${EXECUTABLE_TARGET}.")
    endif(NOT ARGN)
 
    get_target_property(TARGET_LIST ${EXECUTABLE_TARGET} OUTPUT_NAME)
